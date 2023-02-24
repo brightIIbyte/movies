@@ -106,4 +106,4 @@ class Rating(models.Model):
     movie = models.ForeignKey(Movie, on_delete=models.CharField)
 
 
-# test
+# lesson
