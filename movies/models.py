@@ -19,7 +19,7 @@ class Category (models.Model):
 class Actor (models.Model):
     """Актеры режиссеры"""
     name = models.CharField("Имя", max_length=100)
-    age = models.PositiveIntegerField("Возраст", default=0)
+    age = models.PositiveSmallIntegerField("Возраст", default=0)
     description = models.TextField("Описание")
     image = models.ImageField("Изображение", upload_to="actors/*")
 
@@ -51,7 +51,7 @@ class Movie(models.Model):
     tagline = models.CharField("Слоган", max_length=100, default=' ')
     description = models.TextField("Описание")
     poster = models.ImageField("Постер", upload_to="movies/")
-    year = models.PositiveIntegerField("Дата выхода", default=2019)
+    year = models.PositiveSmallIntegerField("Дата выхода", default=2019)
     country = models.CharField("Страна", max_length=30)
     directors = models.ManyToManyField(Actor, verbose_name="режиссер", related_name="film_director")
     actors = models.ManyToManyField(Actor, verbose_name="актеры", related_name="film_actor")
@@ -89,7 +89,7 @@ class MovieShots(models.Model):
 
 class RatingStar(models.Model):
     """Звезда рейтинга"""
-    value = models.PositiveIntegerField("Значение", default=0)
+    value = models.SmallIntegerField("Значение", default=0)
 
     def __str__(self):
         return self.value
@@ -103,7 +103,29 @@ class Rating(models.Model):
     """Рейтинг"""
     ip = models.CharField("IP адрес", max_length=15)
     star = models.ForeignKey(RatingStar, on_delete=models.CASCADE, verbose_name="звезда")
-    movie = models.ForeignKey(Movie, on_delete=models.CharField)
+    movie = models.ForeignKey(Movie, on_delete=models.CharField, verbose_name="фильм")
+
+    def __str__(self):
+        return f"{self.star} - {self.movie}"
+
+    class Meta:
+        verbose_name = "Рейтинг"
+        verbose_name_plural = "Рейтинги"
 
 
-# lesson
+class Review(models.Model):
+    """Отзывы"""
+    email = models.EmailField()
+    name = models.CharField("Имя", max_length=100)
+    text = models.TextField("Сообщения", max_length=5000)
+    parent = models.ForeignKey('self', verbose_name="Родитель", on_delete=models.SET_NULL, blank=True, null=True)
+    movie = models.ForeignKey(Movie, verbose_name="фильм", on_delete=models.CASCADE)
+
+    def __str__(self):
+        return f"{self.name} - {self.movie}"
+
+    class Meta:
+        verbose_name = "Отзыв"
+        verbose_name_plural = "Отзывы"
+
+#fixing_more
