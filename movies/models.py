@@ -128,4 +128,4 @@ class Review(models.Model):
         verbose_name = "Отзыв"
         verbose_name_plural = "Отзывы"
 
-#fixing_more
+#models_done
