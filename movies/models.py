@@ -47,7 +47,7 @@ class Genre(models.Model):
 
 class Movie(models.Model):
     """Фильм"""
-    title = models.CharField("Категория", max_length=100)
+    title = models.CharField("Название", max_length=100)
     tagline = models.CharField("Слоган", max_length=100, default=' ')
     description = models.TextField("Описание")
     poster = models.ImageField("Постер", upload_to="movies/")
