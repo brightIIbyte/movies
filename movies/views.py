@@ -15,4 +15,3 @@ class MovieDataView(View):
     def get(self, request, pk):
         movie = Movie.objects.get(id=pk)
         return render(request, "movies/movie_detail.html", {"movie:movie"})
-
