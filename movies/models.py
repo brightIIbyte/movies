@@ -124,8 +124,8 @@ class Review(models.Model):
     def __str__(self):
         return f"{self.name} - {self.movie}"
 
+
     class Meta:
         verbose_name = "Отзыв"
         verbose_name_plural = "Отзывы"
-
-#check
+#By
